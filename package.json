@@ -1,0 +1,16 @@
+{
+  "name": "web-storage",
+  "version": "1.0.0",
+  "repository": "git@github.com:Guillenjulian/web-storage.git",
+  "author": "Guillen Julian <guillen.julian1985@gmail.com>",
+  "license": "MIT",
+  "source": "src/index.html",
+  "scripts": {
+    "dev": "parcel",
+    "build": "parcel build"
+  },
+  "devDependencies": {
+    "parcel": "lastest"
+  },
+  "main": "index.js"
+}
