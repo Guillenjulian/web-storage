@@ -535,9 +535,16 @@ function hmrAcceptRun(bundle, id) {
 var _index = require("./component/form/index");
 var _index1 = require("./component/header/index");
 var _todoItem = require("./component/todo-item");
+var _inicio = require("./page/inicio");
+(function() {
+    const root = document.querySelector("#root");
+    // console.log(root);
+    (0, _inicio.init)(root);
+})();
 
-},{"./component/form/index":"diFdK","./component/header/index":"bsv6P","./component/todo-item":"cjxyZ"}],"diFdK":[function(require,module,exports) {
-var _state = require("../../state");
+},{"./component/form/index":"diFdK","./component/header/index":"bsv6P","./component/todo-item":"cjxyZ","./page/inicio":"03r3z"}],"diFdK":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
 customElements.define("costom-form", class extends HTMLElement {
     shadow = this.attachShadow({
         mode: "open"
@@ -546,13 +553,18 @@ customElements.define("costom-form", class extends HTMLElement {
         super();
         this.render();
     }
-    connectedCallback() {
+    coonecteCallback() {
+        this.title = this.getAttribute("title") || "Nuevo pendiente";
+        this.id = this.getAttribute("id") || "form";
+        this.checkbox = this.getAttribute("checkbox") || "checkbox";
+        this.render();
+    }
+    addCallback() {
         const form = this.shadow.querySelector(".form");
         form.addEventListener("submit", (e)=>{
             e.preventDefault();
-            const f = e.target;
-            (0, _state.state).addItem(f.text.value);
-            console.log(f.text.value, "form");
+            const text = form.text.value;
+            console.log(e.target, "form", text);
         });
     }
     render() {
@@ -583,33 +595,6 @@ customElements.define("costom-form", class extends HTMLElement {
         this.shadow.appendChild(style);
     }
 });
-
-},{"../../state":"1Yeju"}],"1Yeju":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "state", ()=>state);
-const state = {
-    data: {
-        name: "name"
-    },
-    listeners: [],
-    getState () {
-        return this.data;
-    },
-    setState (newState) {
-        this.data = newState;
-        for (const cb of this.listeners)cb();
-        console.log(" soy el state y e cambiado", this.data);
-    },
-    subscribe (callback) {
-        this.listeners.push(callback);
-    },
-    addItem (item) {
-        const cs = this.getState();
-        cs.nombre.push(item);
-        this.setState(cs);
-    }
-};
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -707,16 +692,16 @@ class ListItem extends HTMLElement {
         const style = document.createElement("style");
         div.className = "lista";
         div.innerHTML = `
-    
-    <div>    ${list.map((item)=>{
-            return `<div class="item" >       
-      <input class="checkbox" type="checkbox" >
-      <label class="label" id=${listLength} for="checkbox">
-      ${item}
-      </label>      
-      </div>`;
-        })}
-    </div>
+    <ul>
+    <li>
+
+    <input type="checkbox" id="checkbox" name="checkbox" value="checkbox">
+
+    <label for="checkbox">${list[listLength].text}</label>
+    </li>
+    </ul>
+
+   
     `;
         style.innerHTML = `
     
@@ -727,8 +712,108 @@ class ListItem extends HTMLElement {
         this.appendChild(div);
     }
 }
-customElements.define("custon-item", ListItem);
+customElements.define("custon-list", ListItem);
 
-},{"../../state":"1Yeju","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["84Rv8","jeorp"], "jeorp", "parcelRequireb883")
+},{"../../state":"1Yeju","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1Yeju":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "state", ()=>state);
+const state = {
+    data: {
+        trash: [
+            {
+                id: 1,
+                title: " primer titulo",
+                complete: false
+            },
+            {
+                id: 2,
+                title: " segundo titulo",
+                complete: false
+            },
+            {
+                id: 3,
+                title: " tercero titulo",
+                complete: false
+            }
+        ]
+    },
+    listeners: [],
+    /*esta función intenta cargar datos guardados en el
+  almacenamiento local del navegador y actualiza el estado con estos datos.*/ init () {
+        const loalStorage = localStorage.getItem("state");
+        this.setState(loalStorage ? JSON.parse(loalStorage) : this.data);
+    },
+    /*   esta función devuelve el objeto "data" actual. */ getState () {
+        return this.data;
+    },
+    /*
+   esta función actualiza el estado con el nuevo estado especificado.
+   */ setState (newState) {
+        this.data = newState;
+        for (const cb of this.listeners)cb();
+        console.log(" soy el state y e cambiado", this.data);
+    },
+    /*esta función permite que otras partes del código se suscriban a 
+  cambios en el estado y se les notifique cuando estos cambios ocurran. */ subscribe (callback) {
+        this.listeners.push(callback);
+    },
+    /*esta función agrega una nueva tarea a la matriz de tareas con
+   los valores especificados para id y title. */ addList (id, title) {
+        const currentList = this.getState();
+        currentList.trash.push({
+            id,
+            title,
+            complete: false
+        });
+        this.setState(currentList);
+    },
+    /* esta función devuelve una matriz de tareas que no tienen el 
+  valor "delete" establecido en verdadero.*/ deletList () {
+        const currentList = this.getState();
+        return currentList.filter((i)=>!i.delete);
+    },
+    /*  esta función busca una tarea específica por su id 
+  y cambia su estado "completed" al valor especificado. */ chargList (id, value) {
+        const currentList = this.getState();
+        const list = currentList.find((i)=>{
+            return i.id == id;
+        });
+        list.complete = value;
+        this.setState(currentList);
+    },
+    /* esta función elimina una tarea específica de la matriz de tareas. */ dellete (iten) {
+        const currentList = this.getState();
+        const list = currentList.filter((i)=>{
+            return i.text !== iten;
+        });
+        this.setState(list);
+    }
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"03r3z":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "init", ()=>init);
+function init(container) {
+    const div = document.createElement("div");
+    const sytles = document.createElement("style");
+    div.innerHTML = `
+  <custon-header></custon-header>
+  <h1 class ="Title_h1">Mis pendientes</h1>
+ <costom-form></costom-form>
+ <custon-list></custon-list>
+ 
+ `;
+    div.appendChild(sytles);
+    // console.log(div, "este es el div de el inicio");
+    const formEl = div.querySelector("costom-form");
+    formEl.addEventListener("submit", ()=>{
+        console.log(formEl, "este es el form");
+    });
+    container.appendChild(div);
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["84Rv8","jeorp"], "jeorp", "parcelRequireb883")
 
 //# sourceMappingURL=index.b7a05eb9.js.map

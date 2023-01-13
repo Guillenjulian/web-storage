@@ -4,24 +4,29 @@ customElements.define(
   "costom-form",
   class extends HTMLElement {
     shadow = this.attachShadow({ mode: "open" });
-
+    title: string;
     constructor() {
       super();
 
       this.render();
     }
+    coonecteCallback() {
+      this.title = this.getAttribute("title") || "Nuevo pendiente";
+      this.id = this.getAttribute("id") || "form";
+      this.checkbox = this.getAttribute("checkbox") || "checkbox";
 
-    connectedCallback() {
+      this.render();
+    }
+    addCallback() {
       const form: any = this.shadow.querySelector(".form");
       form.addEventListener("submit", (e) => {
         e.preventDefault();
+        const text = form.text.value;
 
-        const f = e.target as any;
-
-        state.addItem(f.text.value);
-        console.log(f.text.value, "form");
+        console.log(e.target, "form", text);
       });
     }
+
     render() {
       this.shadow.innerHTML = `
         <form class="form">

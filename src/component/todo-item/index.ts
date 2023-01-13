@@ -24,16 +24,16 @@ export class ListItem extends HTMLElement {
     div.className = "lista";
 
     div.innerHTML = `
-    
-    <div>    ${list.map((item) => {
-      return `<div class="item" >       
-      <input class="checkbox" type="checkbox" >
-      <label class="label" id=${listLength} for="checkbox">
-      ${item}
-      </label>      
-      </div>`;
-    })}
-    </div>
+    <ul>
+    <li>
+
+    <input type="checkbox" id="checkbox" name="checkbox" value="checkbox">
+
+    <label for="checkbox">${list[listLength].text}</label>
+    </li>
+    </ul>
+
+   
     `;
     style.innerHTML = `
     
@@ -45,4 +45,4 @@ export class ListItem extends HTMLElement {
     this.appendChild(div);
   }
 }
-customElements.define("custon-item", ListItem);
+customElements.define("custon-list", ListItem);

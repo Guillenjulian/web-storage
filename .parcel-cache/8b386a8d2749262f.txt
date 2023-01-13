@@ -1,6 +1,6 @@
 4319
-79/home/julian/dwf/mod-5/web-storage-state/web-storage/dist/index.b7a05eb9.js.map1673491357394278256 0
-68/home/julian/dwf/mod-5/web-storage-state/web-storage/dist/index.html1673491510060583984 0
+79/home/julian/dwf/mod-5/web-storage-state/web-storage/dist/index.b7a05eb9.js.map1673576685338210537 0
+68/home/julian/dwf/mod-5/web-storage-state/web-storage/dist/index.html1673576685410210713 0
 82/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/semver/semver.js1668652328628000000 0
 85/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/semver/package.json1668652328628000000 0
 82/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/semver/README.md1668652328628000000 0
@@ -1274,7 +1274,7 @@
 106/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/caniuse-lite/data/features/css-resize.js1673484356493999000 0
 110/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/dom-serializer/node_modules/entities/LICENSE1668652338006999000 0
 114/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/core/test/fixtures/common-targets-ignore1673484369591070913 1
-65/home/julian/dwf/mod-5/web-storage-state/web-storage/src/state.ts1673489519761999053 0
+65/home/julian/dwf/mod-5/web-storage-state/web-storage/src/state.ts1673576022442755994 0
 99/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/core/test/fixtures/parcel1673484369599070794 1
 109/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/core/src/TargetDescriptor.schema.js1671154293674000000 0
 105/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/htmlnano/lib/modules/removeUnusedCss.js1668652329819000000 0
@@ -1372,7 +1372,7 @@
 104/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/caniuse-lite/data/features/css-grid.js1673484356493999000 0
 108/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/core/src/requests/TargetRequest.js1671154293674000000 0
 76/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/parcel/lib1673485257074891691 1
-75/home/julian/dwf/mod-5/web-storage-state/web-storage/dist/index.b7a05eb9.js1673491357390278197 0
+75/home/julian/dwf/mod-5/web-storage-state/web-storage/dist/index.b7a05eb9.js1673576685334210527 0
 88/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/term-size/package.json1668652324802999000 0
 100/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/core/src/RequestTracker.js1671154293674000000 0
 94/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/weak-lru-cache/tests/test.js1668652333559000000 0
@@ -1813,7 +1813,7 @@
 100/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/codeframe/lib/codeframe.js1671154297841000000 0
 94/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/watcher/src/Event.hh1673484356427999000 0
 95/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/fs/lib/browser.js.map1671154293197000000 0
-80/home/julian/dwf/mod-5/web-storage-state/web-storage/src/component/form/index.ts1673489868534278894 0
+80/home/julian/dwf/mod-5/web-storage-state/web-storage/src/component/form/index.ts1673576685042209815 0
 117/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/lmdb/dependencies/lmdb/libraries/liblmdb/mdb_copy.11668652330371999000 0
 123/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/workers/test/integration/workerfarm/master-sum.js1671154297434999000 0
 81/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/tslib/README.md1668652332723000000 0
@@ -1912,7 +1912,7 @@
 93/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/events/lib/index.js1671154293210999000 0
 127/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/package-manager/test/fixtures/packages/a/package.json1671154293213999000 0
 108/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/htmlnano/lib/modules/collapseWhitespace.js1668652329819000000 0
-85/home/julian/dwf/mod-5/web-storage-state/web-storage/src/component/todo-item/index.ts1673490208053520295 0
+85/home/julian/dwf/mod-5/web-storage-state/web-storage/src/component/todo-item/index.ts1673573599926295355 0
 157/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/core/test/fixtures/plugins/node_modules/parcel-transformer-bad-engines/package.json1671154293674000000 0
 96/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/svgo/plugins/removeUnusedNS.js1668652329482000000 0
 79/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/yaml/util.mjs1668652337154999000 0
@@ -2293,7 +2293,7 @@
 93/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/mdn-data/css/selectors.json1668652337414999000 0
 81/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/is-glob/LICENSE1670380021536000000 0
 75/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/lmdb/dict1673484369067078755 1
-71/home/julian/dwf/mod-5/web-storage-state/web-storage/src/page/inicio.ts1673489193957924403 0
+71/home/julian/dwf/mod-5/web-storage-state/web-storage/src/page/inicio.ts1673576338701265504 0
 139/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/transformer-react-refresh-wrap/src/ReactRefreshWrapTransformer.js1671154297015000000 0
 109/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@lmdb/lmdb-linux-x64/node.abi108.glibc.node1668652335592000000 0
 114/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/lmdb/dependencies/lmdb/libraries/liblmdb/mtest.c1668652330371999000 0
@@ -2820,7 +2820,7 @@
 106/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/json-parse-even-better-errors/LICENSE.md1668652337352999000 0
 116/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/transformer-babel/src/remapAstLocations.js1671154296298000000 0
 170/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/node-resolver-core/test/fixture/node_modules/side-effects-package-redirect-down/foo/package.json1671154298573999000 0
-67/home/julian/dwf/mod-5/web-storage-state/web-storage/src/index.html1673491509968582579 0
+67/home/julian/dwf/mod-5/web-storage-state/web-storage/src/index.html1673573043138078781 0
 105/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/terser/lib/compress/compressor-flags.js1670202348483999000 0
 81/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/braces/index.js1670380027993000000 0
 113/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/core/src/requests/BundleGraphRequest.js1671154293674000000 0
@@ -3369,7 +3369,7 @@
 153/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/node-resolver-core/test/fixture/node_modules/side-effects-false-glob/b/index.js1671154298573999000 0
 155/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/node-resolver-core/test/fixture/node_modules/side-effects-false-glob/package.json1671154298573999000 0
 119/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/transformer-js/node_modules/.bin/browserslist1673484369711069118 0
-57/home/julian/dwf/mod-5/web-storage-state/web-storage/dist1673491510064584045 1
+57/home/julian/dwf/mod-5/web-storage-state/web-storage/dist1673576685410210713 1
 100/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/namer-default/package.json1671154294875000000 0
 72/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@lezer1673484368303090246 1
 146/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/@parcel/node-resolver-core/test/fixture/node_modules/side-effects-false-glob/sub1673484369639070195 1
@@ -4177,7 +4177,7 @@
 113/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/caniuse-lite/data/features/fieldset-disabled.js1673484356493999000 0
 86/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/json5/lib/parse.d.ts1672797628874000000 0
 81/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/json5/README.md1672797628874000000 0
-64/home/julian/dwf/mod-5/web-storage-state/web-storage/src/main.ts1673490373178368743 0
+64/home/julian/dwf/mod-5/web-storage-state/web-storage/src/main.ts1673573734693554868 0
 89/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/json5/dist/index.min.js1672797628874000000 0
 91/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/weak-lru-cache/index.d.ts1668652333559000000 0
 113/home/julian/dwf/mod-5/web-storage-state/web-storage/node_modules/css-select/lib/pseudo-selectors/subselects.d.ts1668652330499000000 0
