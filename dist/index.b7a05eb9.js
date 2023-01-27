@@ -532,69 +532,221 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"jeorp":[function(require,module,exports) {
-var _index = require("./component/form/index");
-var _index1 = require("./component/header/index");
+var _header = require("./component/header");
+var _text = require("./component/text");
+//import "./component/card";
 var _todoItem = require("./component/todo-item");
+var _state = require("./state");
 var _inicio = require("./page/inicio");
 (function() {
     const root = document.querySelector("#root");
     // console.log(root);
-    (0, _inicio.init)(root);
+    (0, _state.state).init();
+    (0, _inicio.initHome)(root);
 })();
 
-},{"./component/form/index":"diFdK","./component/header/index":"bsv6P","./component/todo-item":"cjxyZ","./page/inicio":"03r3z"}],"diFdK":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-customElements.define("costom-form", class extends HTMLElement {
-    shadow = this.attachShadow({
-        mode: "open"
-    });
+},{"./component/todo-item":"cjxyZ","./page/inicio":"03r3z","./component/header":"bsv6P","./component/text":"iR2MB","./state":"1Yeju"}],"cjxyZ":[function(require,module,exports) {
+var _state = require("../../state");
+const deleteImg = require("186615a05a855ac8");
+customElements.define("custon-todo-item", class extends HTMLElement {
+    checked = false;
     constructor(){
         super();
-        this.render();
+        this.shadow = this.attachShadow({
+            mode: "open"
+        });
     }
-    coonecteCallback() {
-        this.title = this.getAttribute("title") || "Nuevo pendiente";
-        this.id = this.getAttribute("id") || "form";
-        this.checkbox = this.getAttribute("checkbox") || "checkbox";
+    connectedCallback() {
+        this.title = this.getAttribute("title") || "";
+        this.id = this.getAttribute("id") || "";
+        this.checked = this.hasAttribute("checked");
+        // console.log(this.checked, "soy el checked");
+        const style = document.createElement("style");
+        style.innerHTML = `
+      .root {
+        width:311px;
+        height:111px;
+        font-weight: 500;
+        border-radius: 4px;
+        background-color: #fff599;
+        padding: 22px 13px;
+        margin: 10px;
+        font-size: 18px;
+        }
+        .root_checked {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+        }
+       .titulo.checked {
+        text-decoration: line-through;
+       }
+       
+       `;
         this.render();
+        this.shadow.appendChild(style);
     }
     addCallback() {
-        const form = this.shadow.querySelector(".form");
-        form.addEventListener("submit", (e)=>{
-            e.preventDefault();
-            const text = form.text.value;
-            console.log(e.target, "form", text);
+        const checkbox = this.shadow.querySelector(".checkbox-input");
+        checkbox.addEventListener("click", (e)=>{
+            const checked = e.target;
+            const event = new CustomEvent("change", {
+                detail: {
+                    id: this.id,
+                    value: checked.checked
+                }
+            });
+            this.dispatchEvent(event);
+        // console.log(checked.checked, "soy el checkbox");
         });
     }
     render() {
-        this.shadow.innerHTML = `
-        <form class="form">
-        <label class="form__label">Nuevo pendiente</label>
-        <input  name="text" class="form__input"  placeholder="Nuevo pendiente" />
-        <button class="form__button">Agregar</button>
-        </form>
-        `;
-        const style = document.createElement("style");
-        style.innerHTML = `
+        const div = document.createElement("div");
+        div.classList.add("root");
+        div.innerHTML = `
       
-      .form {
-         
-            
-        }   
-        .form__label {
-       
-        .form__input {
-         
-     
-        }
-        .form__button {
-         
-        }
-        `;
-        this.shadow.appendChild(style);
+       <h4 class = "titulo ${this.checked ? "checked" : ""}">
+       ${this.title}
+       </h4>
+
+       <div class = "root_checked"> 
+       <input  class= "checkbox-input"  type="checkbox"
+        ${this.checked ? "checked" : ""}/>
+
+        <a class = "deleteTag" href = "#" ><img src ="${deleteImg}" alt= "Delete" ></a>
+        
+        
+      </div >`;
+        const deleteTag = div.querySelector(".deleteTag");
+        deleteTag?.addEventListener("click", (e)=>{
+            e.preventDefault();
+            //  console.log(this.getAttribute("id"), "soy el id");
+            //  localStorage.removeItem(this.getAttribute("id") || "");
+            (0, _state.state).deleteItem(this.getAttribute("id"));
+        });
+        this.shadow.appendChild(div);
+        this.addCallback();
     }
 });
+
+},{"186615a05a855ac8":"kAmvn","../../state":"1Yeju"}],"kAmvn":[function(require,module,exports) {
+module.exports = require("4d5c9da70da48b69").getBundleURL("aNMIV") + "delete1.384d42c1.png" + "?" + Date.now();
+
+},{"4d5c9da70da48b69":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+"use strict";
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ("" + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return "/";
+}
+function getBaseURL(url) {
+    return ("" + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, "$1") + "/";
+} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ("" + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
+    if (!matches) throw new Error("Origin not found");
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"1Yeju":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "state", ()=>state);
+const state = {
+    data: {
+        tasks: [
+            {
+                id: 1,
+                title: " primer titulo",
+                complete: false
+            },
+            {
+                id: 2,
+                title: " segundo titulo",
+                complete: true
+            },
+            {
+                id: 3,
+                title: " tercero titulo",
+                delete: true
+            }
+        ]
+    },
+    listeners: [],
+    /*esta función intenta cargar datos guardados en el
+  almacenamiento local del navegador y actualiza el estado con estos datos.*/ init () {
+        const loalStorage = localStorage.getItem("save-state");
+        this.setState(JSON.parse(loalStorage));
+    },
+    /*   esta función devuelve el objeto "data" actual. */ getState () {
+        return this.data;
+    },
+    /*
+   esta función actualiza el estado con el nuevo estado especificado.
+   */ setState (newState) {
+        this.data = newState;
+        for (const cb of this.listeners)cb(newState);
+        localStorage.setItem("save-state", JSON.stringify(newState));
+        console.log(" soy el state y e cambiado", this.data);
+    },
+    /*esta función permite que otras partes del código se suscriban a 
+  cambios en el estado y se les notifique cuando estos cambios ocurran. */ subscribe (callback) {
+        this.listeners.push(callback);
+    },
+    /*esta función agrega una nueva tarea a la matriz de tareas con
+   los valores especificados para  title. */ addList (id, title) {
+        const currentList = this.getState();
+        currentList.tasks.push({
+            id: id,
+            title: title,
+            complete: false
+        });
+        this.setState(currentList);
+    //console.log("soy el state y e cambiado addlist", this.data);
+    },
+    /* esta función devuelve una matriz de tareas que no tienen el 
+  valor "delete" establecido en verdadero.*/ getEnavelTasks () {
+        const currentList = this.getState();
+        return currentList.tasks.filter((i)=>!i.delete);
+    },
+    /*  esta función busca una tarea específica por su id 
+  y cambia su estado "completed" al valor especificado. */ chargList (id, value) {
+        const currentList = this.getState();
+        const list = currentList.tasks.find((i)=>i.id == id);
+        list.complete = value;
+        this.setState(currentList);
+    // console.log(list, "soy la lista");
+    // console.log(id, value);
+    },
+    /* esta función elimina una tarea específica de la matriz de tareas. */ deleteItem (iten) {
+        const currentList = this.getState();
+        const newList = currentList.filter((i)=>{
+            // return i.id !== Number(iten);
+            return console.log(i.id !== Number(iten));
+        });
+        console.log(newList, "soy la nueva lista");
+        this.setState(newList);
+    }
+};
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -626,7 +778,115 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"bsv6P":[function(require,module,exports) {
+},{}],"03r3z":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "initHome", ()=>initHome);
+var _state = require("../state");
+function initHome(container) {
+    const div = document.createElement("div");
+    const style = document.createElement("style");
+    //  console.log(div, "soy el div");
+    const tasks = (0, _state.state).getEnavelTasks();
+    div.innerHTML = ` 
+  <custon-header></custon-header>
+    <h1> Mis Pendiente  </h1>
+    <form class="form">
+     
+    <label for="text">Agregar tarea</label>
+      <div class="form__div-input">
+      <input class =" form__input" type="text" name="text" id="text" placeholder= " agregar tarea" />
+    <button class="addButon"> Agregar elemento </button>
+    </div>
+    </form>
+    <ul class = "lista"> </ul>
+
+  `;
+    style.innerHTML = `
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  gap: 10px;
+}
+.form__div-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+  .form__input {
+    display: flex;
+    flex-direction:colum;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    width: 50vh;
+    height: 5vh;
+  }
+ .addButon {
+    background-color: #9CBBE9;
+    border: none;
+    color: black;
+    font-size: 16px;
+    text-align: center;
+    width: 50vh;
+    height: 5vh;
+  }
+
+  `;
+    const lista = div.querySelector(".lista");
+    // console.log(lista, "soy la lista");
+    function createTrasks(items) {
+        // const itemsMapeados = items.map(
+        //   (t) =>
+        //     `
+        //    <custon-todo-item title="${t.title}" checket = "${
+        //       t.complete || t.delete
+        //     }"></custon-todo-item>
+        //   `
+        // );
+        lista.innerHTML = "";
+        for (const iten of items){
+            const todoItem = document.createElement("custon-todo-item");
+            todoItem.setAttribute("title", iten.title);
+            todoItem.setAttribute("id", iten.id);
+            if (iten.complete || iten.delete) todoItem.setAttribute("checked", "true");
+            todoItem.addEventListener("change", (e)=>{
+                (0, _state.state).chargList(e.detail.id, e.detail.value);
+            // console.log(e, "soy el evento 1");
+            });
+            lista.appendChild(todoItem);
+        }
+    // lista.innerHTML = itemsMapeados.join("");
+    }
+    // console.log(tesks, " soy el estado");
+    (0, _state.state).subscribe(()=>{
+        const crateEl = createTrasks((0, _state.state).getEnavelTasks());
+    // console.log(crateEl, "soy el estado");
+    });
+    createTrasks(tasks);
+    const addButon = div.querySelector(".addButon");
+    addButon.addEventListener("click", ()=>{
+        (0, _state.state).addList(Math.floor(Math.random() * 100), "title " + Math.floor(Math.random() * 100));
+    // console.log(
+    //   state.addList("title " + Math.random()),
+    //   "soy el estado del add"
+    // );
+    // console.log(addButon, "soy el boton");
+    });
+    div.appendChild(style);
+    container.appendChild(div);
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../state":"1Yeju"}],"bsv6P":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Headre", ()=>Headre);
@@ -666,153 +926,58 @@ class Headre extends HTMLElement {
 }
 customElements.define("custon-header", Headre);
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cjxyZ":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iR2MB":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "ListItem", ()=>ListItem);
-var _state = require("../../state");
-class ListItem extends HTMLElement {
-    shadow = this.attachShadow({
-        mode: "open"
-    });
+customElements.define("costom-text", class extends HTMLElement {
+    tags = [
+        "h1",
+        "p"
+    ];
+    tag = "p";
     constructor(){
         super();
-        this.connecteCallback();
-    }
-    connecteCallback() {
-        (0, _state.state).subscribe(()=>{
-            this.render();
+        this.shadow = this.attachShadow({
+            mode: "open"
         });
+        if (this.tags.includes(this.getAttribute("tag"))) this.tag = this.getAttribute("tag") || this.tag;
+        // console.log(this.tag, "este es el tag");
+        this.render();
     }
-    // addEventListener del checkbox
     render() {
-        const list = (0, _state.state).getState().list;
-        const listLength = list.length - 1;
-        const div = document.createElement("div");
+        const rootEl = document.createElement(this.tag);
+        rootEl.textContent = this.textContent;
+        this.shadow.appendChild(rootEl);
         const style = document.createElement("style");
-        div.className = "lista";
-        div.innerHTML = `
-    <ul>
-    <li>
-
-    <input type="checkbox" id="checkbox" name="checkbox" value="checkbox">
-
-    <label for="checkbox">${list[listLength].text}</label>
-    </li>
-    </ul>
-
-   
-    `;
         style.innerHTML = `
-    
-    
-      `;
-        div.appendChild(style);
-        this.firstChild?.remove();
-        this.appendChild(div);
-    }
-}
-customElements.define("custon-list", ListItem);
 
-},{"../../state":"1Yeju","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1Yeju":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "state", ()=>state);
-const state = {
-    data: {
-        trash: [
-            {
-                id: 1,
-                title: " primer titulo",
-                complete: false
-            },
-            {
-                id: 2,
-                title: " segundo titulo",
-                complete: false
-            },
-            {
-                id: 3,
-                title: " tercero titulo",
-                complete: false
-            }
-        ]
-    },
-    listeners: [],
-    /*esta función intenta cargar datos guardados en el
-  almacenamiento local del navegador y actualiza el estado con estos datos.*/ init () {
-        const loalStorage = localStorage.getItem("state");
-        this.setState(loalStorage ? JSON.parse(loalStorage) : this.data);
-    },
-    /*   esta función devuelve el objeto "data" actual. */ getState () {
-        return this.data;
-    },
-    /*
-   esta función actualiza el estado con el nuevo estado especificado.
-   */ setState (newState) {
-        this.data = newState;
-        for (const cb of this.listeners)cb();
-        console.log(" soy el state y e cambiado", this.data);
-    },
-    /*esta función permite que otras partes del código se suscriban a 
-  cambios en el estado y se les notifique cuando estos cambios ocurran. */ subscribe (callback) {
-        this.listeners.push(callback);
-    },
-    /*esta función agrega una nueva tarea a la matriz de tareas con
-   los valores especificados para id y title. */ addList (id, title) {
-        const currentList = this.getState();
-        currentList.trash.push({
-            id,
-            title,
-            complete: false
-        });
-        this.setState(currentList);
-    },
-    /* esta función devuelve una matriz de tareas que no tienen el 
-  valor "delete" establecido en verdadero.*/ deletList () {
-        const currentList = this.getState();
-        return currentList.filter((i)=>!i.delete);
-    },
-    /*  esta función busca una tarea específica por su id 
-  y cambia su estado "completed" al valor especificado. */ chargList (id, value) {
-        const currentList = this.getState();
-        const list = currentList.find((i)=>{
-            return i.id == id;
-        });
-        list.complete = value;
-        this.setState(currentList);
-    },
-    /* esta función elimina una tarea específica de la matriz de tareas. */ dellete (iten) {
-        const currentList = this.getState();
-        const list = currentList.filter((i)=>{
-            return i.text !== iten;
-        });
-        this.setState(list);
-    }
-};
+      .form {
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"03r3z":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "init", ()=>init);
-function init(container) {
-    const div = document.createElement("div");
-    const sytles = document.createElement("style");
-    div.innerHTML = `
-  <custon-header></custon-header>
-  <h1 class ="Title_h1">Mis pendientes</h1>
- <costom-form></costom-form>
- <custon-list></custon-list>
- 
- `;
-    div.appendChild(sytles);
-    // console.log(div, "este es el div de el inicio");
-    const formEl = div.querySelector("costom-form");
-    formEl.addEventListener("submit", ()=>{
-        console.log(formEl, "este es el form");
-    });
-    container.appendChild(div);
-}
+
+        }
+        .form__label {
+
+        .form__input {
+
+
+        }
+        .form__button {
+
+        }
+        `;
+        // const formEl: any = this.shadow.querySelector("form") as HTMLElement;
+        // formEl.addEventListener("submit", (e: any) => {
+        //   e.preventDefault();
+        //   const text = e.target.text.value;
+        //   state.setState({
+        //     ...state.getState(),
+        //     list: [...state.getState().list, { text, complete: false }],
+        //   });
+        //   console.log(text, "este es el text");
+        // });
+        this.shadow.appendChild(style);
+    }
+});
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["84Rv8","jeorp"], "jeorp", "parcelRequireb883")
 

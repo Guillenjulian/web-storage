@@ -1,13 +1,15 @@
-import {} from "./component/form/index";
-import {} from "./component/header/index";
-import {} from "./component/todo-item";
+import "./component/header";
+import "./component/text";
+//import "./component/card";
+import "./component/todo-item";
 
 import { state } from "./state";
-import { init as initHome } from "./page/inicio";
+
+import { initHome } from "./page/inicio";
 
 (function () {
   const root: any = document.querySelector("#root") as HTMLElement;
   // console.log(root);
-
+  state.init();
   initHome(root);
 })();

@@ -10,6 +10,7 @@
     "build": "parcel build"
   },
   "devDependencies": {
+    "@types/node": "^18.11.18",
     "parcel": "lastest"
   },
   "main": "index.js"
