@@ -1,7 +1,8 @@
 import "./component/header";
-import "./component/text";
+//import "./component/text";
 //import "./component/card";
 import "./component/todo-item";
+import "./component/form";
 
 import { state } from "./state";
 

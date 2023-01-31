@@ -533,9 +533,10 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"jeorp":[function(require,module,exports) {
 var _header = require("./component/header");
-var _text = require("./component/text");
+//import "./component/text";
 //import "./component/card";
 var _todoItem = require("./component/todo-item");
+var _form = require("./component/form");
 var _state = require("./state");
 var _inicio = require("./page/inicio");
 (function() {
@@ -545,7 +546,7 @@ var _inicio = require("./page/inicio");
     (0, _inicio.initHome)(root);
 })();
 
-},{"./component/todo-item":"cjxyZ","./page/inicio":"03r3z","./component/header":"bsv6P","./component/text":"iR2MB","./state":"1Yeju"}],"cjxyZ":[function(require,module,exports) {
+},{"./component/todo-item":"cjxyZ","./page/inicio":"03r3z","./component/header":"bsv6P","./state":"1Yeju","./component/form":"diFdK"}],"cjxyZ":[function(require,module,exports) {
 var _state = require("../../state");
 const deleteImg = require("186615a05a855ac8");
 customElements.define("custon-todo-item", class extends HTMLElement {
@@ -564,6 +565,10 @@ customElements.define("custon-todo-item", class extends HTMLElement {
         const style = document.createElement("style");
         style.innerHTML = `
       .root {
+        display: flex;
+        justify-content: space-between;
+        padding: 0;
+        gap: 3rem;
         width:311px;
         height:111px;
         font-weight: 500;
@@ -575,13 +580,23 @@ customElements.define("custon-todo-item", class extends HTMLElement {
         }
         .root_checked {
           display: flex;
+        flex-direction: column;
           justify-content: space-between;
           align-items: center;
-
+          
         }
+     
+
        .titulo.checked {
         text-decoration: line-through;
        }
+       .root:hover .deleteTag {
+      display: block;; 
+      }
+       .deleteTag {
+          display: none;
+        }
+
        
        `;
         this.render();
@@ -606,11 +621,11 @@ customElements.define("custon-todo-item", class extends HTMLElement {
         div.classList.add("root");
         div.innerHTML = `
       
+      <div class = "root_checked"> 
        <h4 class = "titulo ${this.checked ? "checked" : ""}">
        ${this.title}
        </h4>
 
-       <div class = "root_checked"> 
        <input  class= "checkbox-input"  type="checkbox"
         ${this.checked ? "checked" : ""}/>
 
@@ -622,7 +637,7 @@ customElements.define("custon-todo-item", class extends HTMLElement {
         deleteTag?.addEventListener("click", (e)=>{
             e.preventDefault();
             //  console.log(this.getAttribute("id"), "soy el id");
-            //  localStorage.removeItem(this.getAttribute("id") || "");
+            localStorage.removeItem(this.getAttribute("id") || "");
             (0, _state.state).deleteItem(this.getAttribute("id"));
         });
         this.shadow.appendChild(div);
@@ -706,7 +721,7 @@ const state = {
         this.data = newState;
         for (const cb of this.listeners)cb(newState);
         localStorage.setItem("save-state", JSON.stringify(newState));
-        console.log(" soy el state y e cambiado", this.data);
+    //  console.log(" soy el state y e cambiado", this.data);
     },
     /*esta función permite que otras partes del código se suscriban a 
   cambios en el estado y se les notifique cuando estos cambios ocurran. */ subscribe (callback) {
@@ -739,12 +754,9 @@ const state = {
     },
     /* esta función elimina una tarea específica de la matriz de tareas. */ deleteItem (iten) {
         const currentList = this.getState();
-        const newList = currentList.filter((i)=>{
-            // return i.id !== Number(iten);
-            return console.log(i.id !== Number(iten));
-        });
-        console.log(newList, "soy la nueva lista");
-        this.setState(newList);
+        const newList = currentList.tasks.filter((i)=>i.id != iten);
+        currentList.tasks = newList;
+        this.setState(currentList);
     }
 };
 
@@ -789,70 +801,48 @@ function initHome(container) {
     //  console.log(div, "soy el div");
     const tasks = (0, _state.state).getEnavelTasks();
     div.innerHTML = ` 
-  <custon-header></custon-header>
-    <h1> Mis Pendiente  </h1>
-    <form class="form">
-     
-    <label for="text">Agregar tarea</label>
-      <div class="form__div-input">
-      <input class =" form__input" type="text" name="text" id="text" placeholder= " agregar tarea" />
-    <button class="addButon"> Agregar elemento </button>
-    </div>
-    </form>
-    <ul class = "lista"> </ul>
 
+  <div class="container"> 
+  <custon-header></custon-header>
+  <div class = " conteiner-form">
+
+  <custon-form class = "custon-form"></custon-form>
+  <ul class = "lista"> </ul>
+  
+  
+  </div>  
+  </div>  
   `;
     style.innerHTML = `
-.form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  text-align: center;
-  gap: 10px;
-}
-.form__div-input {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
 
+  .container {
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+ gap: 1.5rem;
 
-  .form__input {
+  }
+  .conteiner-form {
     display: flex;
-    flex-direction:colum;
+
+    flex-direction: column;
+    gap: 1.5rem;
     align-items: center;
-    justify-content: center;
-    width: 100%;
-    text-align: center;
-    width: 50vh;
-    height: 5vh;
+    gap: 1.5rem;
   }
- .addButon {
-    background-color: #9CBBE9;
-    border: none;
-    color: black;
-    font-size: 16px;
-    text-align: center;
-    width: 50vh;
-    height: 5vh;
+  .lista {
+    padding-inline-start: 0;
   }
+
 
   `;
     const lista = div.querySelector(".lista");
     // console.log(lista, "soy la lista");
     function createTrasks(items) {
-        // const itemsMapeados = items.map(
-        //   (t) =>
-        //     `
-        //    <custon-todo-item title="${t.title}" checket = "${
-        //       t.complete || t.delete
-        //     }"></custon-todo-item>
-        //   `
-        // );
+        const itemsMapeados = items.map((t)=>`
+       <custon-todo-item title="${t.title}" checket = "${t.complete || t.delete}"></custon-todo-item>
+
+      `);
         lista.innerHTML = "";
         for (const iten of items){
             const todoItem = document.createElement("custon-todo-item");
@@ -862,6 +852,10 @@ function initHome(container) {
             todoItem.addEventListener("change", (e)=>{
                 (0, _state.state).chargList(e.detail.id, e.detail.value);
             // console.log(e, "soy el evento 1");
+            });
+            todoItem.addEventListener("delete", (e)=>{
+                (0, _state.state).deleteItem(e.detail.id);
+                console.log(e, "soy el evento 2");
             });
             lista.appendChild(todoItem);
         }
@@ -873,14 +867,23 @@ function initHome(container) {
     // console.log(crateEl, "soy el estado");
     });
     createTrasks(tasks);
-    const addButon = div.querySelector(".addButon");
-    addButon.addEventListener("click", ()=>{
-        (0, _state.state).addList(Math.floor(Math.random() * 100), "title " + Math.floor(Math.random() * 100));
-    // console.log(
-    //   state.addList("title " + Math.random()),
-    //   "soy el estado del add"
-    // );
-    // console.log(addButon, "soy el boton");
+    // const form = div.querySelector(".form") as HTMLElement;
+    // form.addEventListener("submit", (e) => {
+    //   e.preventDefault();
+    //   const input = div.querySelector("#text") as HTMLInputElement;
+    //   console.log(input.value, "soy el input", input);
+    //   const value = input.value;
+    //   state.addList(Math.floor(Math.random() * 100), value);
+    //   input.value = "";
+    //   //console.log(value, "soy el valor");
+    // });
+    const tag = div?.querySelector("custon-form")?.shadowRoot?.querySelector(".form__div-input")?.querySelector(".addButon");
+    tag?.addEventListener("click", (e)=>{
+        e.preventDefault();
+        const inputEl = div?.querySelector("custon-form")?.shadowRoot?.querySelector(".form__input");
+        // console.log(inputEl, "soy el input");
+        (0, _state.state).addList(Math.floor(Math.random() * 100), inputEl.value);
+        inputEl.value = "";
     });
     div.appendChild(style);
     container.appendChild(div);
@@ -926,58 +929,86 @@ class Headre extends HTMLElement {
 }
 customElements.define("custon-header", Headre);
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iR2MB":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"diFdK":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-customElements.define("costom-text", class extends HTMLElement {
-    tags = [
-        "h1",
-        "p"
-    ];
-    tag = "p";
+parcelHelpers.export(exports, "Form", ()=>Form);
+class Form extends HTMLElement {
     constructor(){
         super();
         this.shadow = this.attachShadow({
             mode: "open"
         });
-        if (this.tags.includes(this.getAttribute("tag"))) this.tag = this.getAttribute("tag") || this.tag;
-        // console.log(this.tag, "este es el tag");
         this.render();
     }
     render() {
-        const rootEl = document.createElement(this.tag);
-        rootEl.textContent = this.textContent;
-        this.shadow.appendChild(rootEl);
+        const form = document.createElement("form");
+        form.classList.add("form");
+        form.innerHTML = `
+<h1 class = "title"> Mis Pendiente  </h1>
+  
+<div class="form__div-input">
+<label for="text">Agregar tarea</label>
+<input class =" form__input" type="text" name="text" id="text" placeholder= " agregar tarea" />
+<button class="addButon"> Agregar elemento </button>
+</div>
+
+`;
         const style = document.createElement("style");
         style.innerHTML = `
-
-      .form {
-
-
-        }
-        .form__label {
-
+    .form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        text-align: center;
+        gap: 10px;
+      }
+      .form__div-input {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+      
+      
         .form__input {
-
-
+          display: flex;
+          flex-direction:colum;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          text-align: center;
+          width: 50vh;
+          height: 5vh;
         }
-        .form__button {
-
+       .addButon {
+          background-color: #9CBBE9;
+          border: none;
+          color: black;
+          font-size: 16px;
+          text-align: center;
+          width: 50vh;
+          height: 5vh;
         }
-        `;
-        // const formEl: any = this.shadow.querySelector("form") as HTMLElement;
-        // formEl.addEventListener("submit", (e: any) => {
-        //   e.preventDefault();
-        //   const text = e.target.text.value;
-        //   state.setState({
-        //     ...state.getState(),
-        //     list: [...state.getState().list, { text, complete: false }],
-        //   });
-        //   console.log(text, "este es el text");
-        // });
+      
+        .title {
+          font-size: 30px;
+          font-weight: 600;
+          color: #9CBBE9;
+          margin: 0;
+          padding: 0;
+        }
+    
+    
+    `;
+        this.shadow.appendChild(form);
         this.shadow.appendChild(style);
     }
-});
+}
+customElements.define("custon-form", Form);
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["84Rv8","jeorp"], "jeorp", "parcelRequireb883")
 

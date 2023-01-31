@@ -9,72 +9,55 @@ export function initHome(container) {
   const tasks = state.getEnavelTasks();
 
   div.innerHTML = ` 
+
+  <div class="container"> 
   <custon-header></custon-header>
-    <h1> Mis Pendiente  </h1>
-    <form class="form">
-     
-    <label for="text">Agregar tarea</label>
-      <div class="form__div-input">
-      <input class =" form__input" type="text" name="text" id="text" placeholder= " agregar tarea" />
-    <button class="addButon"> Agregar elemento </button>
-    </div>
-    </form>
-    <ul class = "lista"> </ul>
+  <div class = " conteiner-form">
 
+  <custon-form class = "custon-form"></custon-form>
+  <ul class = "lista"> </ul>
+  
+  
+  </div>  
+  </div>  
   `;
+
   style.innerHTML = `
-.form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  text-align: center;
-  gap: 10px;
-}
-.form__div-input {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
 
+  .container {
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+ gap: 1.5rem;
 
-  .form__input {
+  }
+  .conteiner-form {
     display: flex;
-    flex-direction:colum;
+
+    flex-direction: column;
+    gap: 1.5rem;
     align-items: center;
-    justify-content: center;
-    width: 100%;
-    text-align: center;
-    width: 50vh;
-    height: 5vh;
+    gap: 1.5rem;
   }
- .addButon {
-    background-color: #9CBBE9;
-    border: none;
-    color: black;
-    font-size: 16px;
-    text-align: center;
-    width: 50vh;
-    height: 5vh;
+  .lista {
+    padding-inline-start: 0;
   }
+
 
   `;
   const lista = div.querySelector(".lista") as HTMLElement;
   // console.log(lista, "soy la lista");
 
   function createTrasks(items) {
-    // const itemsMapeados = items.map(
-    //   (t) =>
-    //     `
-    //    <custon-todo-item title="${t.title}" checket = "${
-    //       t.complete || t.delete
-    //     }"></custon-todo-item>
+    const itemsMapeados = items.map(
+      (t) =>
+        `
+       <custon-todo-item title="${t.title}" checket = "${
+          t.complete || t.delete
+        }"></custon-todo-item>
 
-    //   `
-    // );
+      `
+    );
     lista.innerHTML = "";
     for (const iten of items) {
       const todoItem = document.createElement("custon-todo-item");
@@ -87,6 +70,10 @@ export function initHome(container) {
       todoItem.addEventListener("change", (e: any) => {
         state.chargList(e.detail.id, e.detail.value);
         // console.log(e, "soy el evento 1");
+      });
+      todoItem.addEventListener("delete", (e: any) => {
+        state.deleteItem(e.detail.id);
+        console.log(e, "soy el evento 2");
       });
       lista.appendChild(todoItem);
     }
@@ -101,19 +88,36 @@ export function initHome(container) {
   });
   createTrasks(tasks);
 
-  const addButon = div.querySelector(".addButon") as HTMLElement;
+  // const form = div.querySelector(".form") as HTMLElement;
+  // form.addEventListener("submit", (e) => {
+  //   e.preventDefault();
+  //   const input = div.querySelector("#text") as HTMLInputElement;
+  //   console.log(input.value, "soy el input", input);
 
-  addButon.addEventListener("click", () => {
-    state.addList(
-      Math.floor(Math.random() * 100),
-      "title " + Math.floor(Math.random() * 100)
-    );
-    // console.log(
-    //   state.addList("title " + Math.random()),
-    //   "soy el estado del add"
-    // );
-    // console.log(addButon, "soy el boton");
+  //   const value = input.value;
+  //   state.addList(Math.floor(Math.random() * 100), value);
+  //   input.value = "";
+
+  //   //console.log(value, "soy el valor");
+  // });
+
+  const tag = div
+    ?.querySelector("custon-form")
+    ?.shadowRoot?.querySelector(".form__div-input")
+    ?.querySelector(".addButon");
+
+  tag?.addEventListener("click", (e) => {
+    e.preventDefault();
+    const inputEl = div
+      ?.querySelector("custon-form")
+      ?.shadowRoot?.querySelector(".form__input");
+
+    // console.log(inputEl, "soy el input");
+
+    state.addList(Math.floor(Math.random() * 100), (inputEl as any).value);
+    (inputEl as any).value = "";
   });
+
   div.appendChild(style);
   container.appendChild(div);
 }

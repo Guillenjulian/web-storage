@@ -23,6 +23,10 @@ customElements.define(
       const style = document.createElement("style");
       style.innerHTML = `
       .root {
+        display: flex;
+        justify-content: space-between;
+        padding: 0;
+        gap: 3rem;
         width:311px;
         height:111px;
         font-weight: 500;
@@ -34,13 +38,23 @@ customElements.define(
         }
         .root_checked {
           display: flex;
+        flex-direction: column;
           justify-content: space-between;
           align-items: center;
-
+          
         }
+     
+
        .titulo.checked {
         text-decoration: line-through;
        }
+       .root:hover .deleteTag {
+      display: block;; 
+      }
+       .deleteTag {
+          display: none;
+        }
+
        
        `;
       this.render();
@@ -66,11 +80,11 @@ customElements.define(
       div.classList.add("root");
       div.innerHTML = `
       
+      <div class = "root_checked"> 
        <h4 class = "titulo ${this.checked ? "checked" : ""}">
        ${this.title}
        </h4>
 
-       <div class = "root_checked"> 
        <input  class= "checkbox-input"  type="checkbox"
         ${this.checked ? "checked" : ""}/>
 
@@ -84,7 +98,7 @@ customElements.define(
       deleteTag?.addEventListener("click", (e) => {
         e.preventDefault();
         //  console.log(this.getAttribute("id"), "soy el id");
-        //  localStorage.removeItem(this.getAttribute("id") || "");
+        localStorage.removeItem(this.getAttribute("id") || "");
         state.deleteItem(this.getAttribute("id"));
       });
 

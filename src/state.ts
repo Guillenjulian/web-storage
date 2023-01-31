@@ -31,7 +31,7 @@ const state = {
       cb(newState);
     }
     localStorage.setItem("save-state", JSON.stringify(newState));
-    console.log(" soy el state y e cambiado", this.data);
+    //  console.log(" soy el state y e cambiado", this.data);
   },
 
   /*esta función permite que otras partes del código se suscriban a 
@@ -77,13 +77,9 @@ const state = {
   /* esta función elimina una tarea específica de la matriz de tareas. */
   deleteItem(iten) {
     const currentList = this.getState();
-    const newList = currentList.filter((i) => {
-      // return i.id !== Number(iten);
-      return console.log(i.id !== Number(iten));
-    });
-    console.log(newList, "soy la nueva lista");
-
-    this.setState(newList);
+    const newList = currentList.tasks.filter((i) => i.id != iten);
+    currentList.tasks = newList;
+    this.setState(currentList);
   },
 };
 export { state };
