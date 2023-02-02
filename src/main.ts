@@ -1,6 +1,4 @@
 import "./component/header";
-//import "./component/text";
-//import "./component/card";
 import "./component/todo-item";
 import "./component/form";
 
@@ -10,7 +8,7 @@ import { initHome } from "./page/inicio";
 
 (function () {
   const root: any = document.querySelector("#root") as HTMLElement;
-  // console.log(root);
+  //console.log(root);
   state.init();
   initHome(root);
 })();

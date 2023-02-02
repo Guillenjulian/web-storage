@@ -533,20 +533,94 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"jeorp":[function(require,module,exports) {
 var _header = require("./component/header");
-//import "./component/text";
-//import "./component/card";
 var _todoItem = require("./component/todo-item");
 var _form = require("./component/form");
 var _state = require("./state");
 var _inicio = require("./page/inicio");
 (function() {
     const root = document.querySelector("#root");
-    // console.log(root);
+    //console.log(root);
     (0, _state.state).init();
     (0, _inicio.initHome)(root);
 })();
 
-},{"./component/todo-item":"cjxyZ","./page/inicio":"03r3z","./component/header":"bsv6P","./state":"1Yeju","./component/form":"diFdK"}],"cjxyZ":[function(require,module,exports) {
+},{"./component/header":"bsv6P","./component/todo-item":"cjxyZ","./component/form":"diFdK","./state":"1Yeju","./page/inicio":"03r3z"}],"bsv6P":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Headre", ()=>Headre);
+class Headre extends HTMLElement {
+    constructor(){
+        super();
+        this.shadow = this.attachShadow({
+            mode: "open"
+        });
+        this.render();
+    }
+    render() {
+        this.shadow.innerHTML = `
+              <header class="header">
+                  <h1 class="header__title">Lista de tareas</h1>
+              </header>
+              `;
+        const style = document.createElement("style");
+        style.innerHTML = `
+              .header {
+                
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  height: 60px ;
+                  width: 100%;
+                  background: #FF8282;
+                }
+                @media (min-width: 960px) {
+                  .header {
+                    height: 80px;
+                  }
+                }
+
+              .header__title {
+                  font-size: 18px;
+                  font-family: "Roboto";
+                  font-weight: 500;
+              }
+              `;
+        this.shadow.appendChild(style);
+    }
+}
+customElements.define("custon-header", Headre);
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"cjxyZ":[function(require,module,exports) {
 var _state = require("../../state");
 const deleteImg = require("186615a05a855ac8");
 customElements.define("custon-todo-item", class extends HTMLElement {
@@ -566,9 +640,8 @@ customElements.define("custon-todo-item", class extends HTMLElement {
         style.innerHTML = `
       .root {
         display: flex;
-        justify-content: space-between;
-        padding: 0;
-        gap: 3rem;
+        justify-content: space-evenly;
+        gap: 2rem;
         width:311px;
         height:111px;
         font-weight: 500;
@@ -578,19 +651,40 @@ customElements.define("custon-todo-item", class extends HTMLElement {
         margin: 10px;
         font-size: 18px;
         }
+        @media (min-width: 960px) {
+          .root {
+        padding:0;
+        margin: 0;
+        
+          }
+
+        }
+
+
+
+
         .root_checked {
           display: flex;
-        flex-direction: column;
-          justify-content: space-between;
+          flex-direction: column;
+          justify-content: space-Evenly;
           align-items: center;
-          
         }
-     
+          
+      .titulo {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 00;
+        color: #000000;
+        text-align: center;
+        font-size: 18px;
+        
 
-       .titulo.checked {
+      }
+
+      .titulo.checked {
         text-decoration: line-through;
-       }
-       .root:hover .deleteTag {
+      } 
+      
+      .root:hover .deleteTag {
       display: block;; 
       }
        .deleteTag {
@@ -621,11 +715,11 @@ customElements.define("custon-todo-item", class extends HTMLElement {
         div.classList.add("root");
         div.innerHTML = `
       
+      <h4 class = "titulo ${this.checked ? "checked" : ""}">
+      ${this.title}
+      </h4>
+      
       <div class = "root_checked"> 
-       <h4 class = "titulo ${this.checked ? "checked" : ""}">
-       ${this.title}
-       </h4>
-
        <input  class= "checkbox-input"  type="checkbox"
         ${this.checked ? "checked" : ""}/>
 
@@ -645,44 +739,7 @@ customElements.define("custon-todo-item", class extends HTMLElement {
     }
 });
 
-},{"186615a05a855ac8":"kAmvn","../../state":"1Yeju"}],"kAmvn":[function(require,module,exports) {
-module.exports = require("4d5c9da70da48b69").getBundleURL("aNMIV") + "delete1.384d42c1.png" + "?" + Date.now();
-
-},{"4d5c9da70da48b69":"lgJ39"}],"lgJ39":[function(require,module,exports) {
-"use strict";
-var bundleURL = {};
-function getBundleURLCached(id) {
-    var value = bundleURL[id];
-    if (!value) {
-        value = getBundleURL();
-        bundleURL[id] = value;
-    }
-    return value;
-}
-function getBundleURL() {
-    try {
-        throw new Error();
-    } catch (err) {
-        var matches = ("" + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
-        if (matches) // The first two stack frames will be this function and getBundleURLCached.
-        // Use the 3rd one, which will be a runtime in the original bundle.
-        return getBaseURL(matches[2]);
-    }
-    return "/";
-}
-function getBaseURL(url) {
-    return ("" + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, "$1") + "/";
-} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function getOrigin(url) {
-    var matches = ("" + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
-    if (!matches) throw new Error("Origin not found");
-    return matches[0];
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-exports.getOrigin = getOrigin;
-
-},{}],"1Yeju":[function(require,module,exports) {
+},{"../../state":"1Yeju","186615a05a855ac8":"kAmvn"}],"1Yeju":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "state", ()=>state);
@@ -721,7 +778,7 @@ const state = {
         this.data = newState;
         for (const cb of this.listeners)cb(newState);
         localStorage.setItem("save-state", JSON.stringify(newState));
-    //  console.log(" soy el state y e cambiado", this.data);
+    // console.log(" soy el state y e cambiado", this.data);
     },
     /*esta función permite que otras partes del código se suscriban a 
   cambios en el estado y se les notifique cuando estos cambios ocurran. */ subscribe (callback) {
@@ -749,7 +806,7 @@ const state = {
         const list = currentList.tasks.find((i)=>i.id == id);
         list.complete = value;
         this.setState(currentList);
-    // console.log(list, "soy la lista");
+    //  console.log(list, "soy la lista");
     // console.log(id, value);
     },
     /* esta función elimina una tarea específica de la matriz de tareas. */ deleteItem (iten) {
@@ -760,37 +817,172 @@ const state = {
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kAmvn":[function(require,module,exports) {
+module.exports = require("4d5c9da70da48b69").getBundleURL("aNMIV") + "delete1.384d42c1.png" + "?" + Date.now();
 
-},{}],"03r3z":[function(require,module,exports) {
+},{"4d5c9da70da48b69":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+"use strict";
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ("" + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return "/";
+}
+function getBaseURL(url) {
+    return ("" + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, "$1") + "/";
+} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ("" + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
+    if (!matches) throw new Error("Origin not found");
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"diFdK":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Form", ()=>Form);
+class Form extends HTMLElement {
+    constructor(){
+        super();
+        this.shadow = this.attachShadow({
+            mode: "open"
+        });
+        this.render();
+    }
+    render() {
+        const form = document.createElement("form");
+        form.classList.add("form");
+        form.innerHTML = `
+<h1 class = "title"> Mis  Pendiente  </h1>
+  <div class="form__content">
+  <div class="form__div-input">
+  
+  <label class ="form__div-label" for="text">Agregar tarea</label>
+
+
+  <input class =" form__input" type="text" name="text" id="text" placeholder= " agregar tarea" />
+  <button class="addButon"> Agregar elemento </button>
+  </div>
+  </div>
+
+`;
+        const style = document.createElement("style");
+        style.innerHTML = `
+    
+    .form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+        width: 100vh;
+        height: 39vh;
+      }
+      @media (min-width: 960px) {
+        .form {
+          
+        }
+      }
+      
+      .title {
+        font-size: 52px;
+        font-weight: 700;
+        color: #00000;
+        margin-top: 41px;
+        margin-bottom: 25px;
+        text-align: left;
+        height: 122px;
+        width: 271px;
+      }
+      @media (min-width: 960px) {
+        .title {
+          width: 100%;
+        }
+        } 
+
+      .form__content {
+
+      }
+      @media (min-width: 960px) {
+        .form__content {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          align-items: end;
+          gap: 29px;
+        }
+      }
+      .form__div-input {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+      }
+      @media (min-width: 960px) {
+        .form__div-input {
+          width: 100%;
+          align-items:text-end;
+        }}
+  
+        .form__input {
+          display: flex;
+          flex-direction:colum;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          text-align: center;
+          width: 312px;
+          height: 55px;
+          gap: 10px;
+          border-radius: 4px;
+
+        }
+        @media (min-width: 960px) {
+          .form__input {
+            width: 100%;
+
+          }
+        }
+
+       .addButon {
+          background-color: #9CBBE9;
+          border:4px #9CBBE9;
+          border-radius: 4px;
+          color: black;
+          font-size: 16px;
+          text-align: center;
+          width: 312px;
+          height: 55px;
+          margin-top: 15px;
+        }
+        
+      
+    
+    
+    `;
+        this.shadow.appendChild(form);
+        this.shadow.appendChild(style);
+    }
+}
+customElements.define("custon-form", Form);
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"03r3z":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "initHome", ()=>initHome);
@@ -798,7 +990,7 @@ var _state = require("../state");
 function initHome(container) {
     const div = document.createElement("div");
     const style = document.createElement("style");
-    //  console.log(div, "soy el div");
+    // console.log(div, "soy el div");
     const tasks = (0, _state.state).getEnavelTasks();
     div.innerHTML = ` 
 
@@ -814,25 +1006,37 @@ function initHome(container) {
   </div>  
   `;
     style.innerHTML = `
+div{
+  box-sizing: border-box;
+}
+.container {
 
-  .container {
-display: flex;
-flex-direction: column;
-justify-content: space-between;
- gap: 1.5rem;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
   }
+
+
   .conteiner-form {
     display: flex;
-
     flex-direction: column;
-    gap: 1.5rem;
+
     align-items: center;
-    gap: 1.5rem;
+  
   }
+  
   .lista {
     padding-inline-start: 0;
   }
+@media (min-width: 960px) {
+  .lista {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100vh;
+  }
+}
 
 
   `;
@@ -855,7 +1059,7 @@ justify-content: space-between;
             });
             todoItem.addEventListener("delete", (e)=>{
                 (0, _state.state).deleteItem(e.detail.id);
-                console.log(e, "soy el evento 2");
+            // console.log(e, "soy el evento 2");
             });
             lista.appendChild(todoItem);
         }
@@ -878,6 +1082,7 @@ justify-content: space-between;
     //   //console.log(value, "soy el valor");
     // });
     const tag = div?.querySelector("custon-form")?.shadowRoot?.querySelector(".form__div-input")?.querySelector(".addButon");
+    //console.log(tag, "soy el tag");
     tag?.addEventListener("click", (e)=>{
         e.preventDefault();
         const inputEl = div?.querySelector("custon-form")?.shadowRoot?.querySelector(".form__input");
@@ -889,127 +1094,6 @@ justify-content: space-between;
     container.appendChild(div);
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../state":"1Yeju"}],"bsv6P":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Headre", ()=>Headre);
-class Headre extends HTMLElement {
-    constructor(){
-        super();
-        this.shadow = this.attachShadow({
-            mode: "open"
-        });
-        this.render();
-    }
-    render() {
-        this.shadow.innerHTML = `
-              <header class="header">
-                  <h1 class="header__title">Lista de tareas</h1>
-              </header>
-              `;
-        const style = document.createElement("style");
-        style.innerHTML = `
-              .header {
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  height: 100% ;
-                  width: 100%;
-                  background: #FF8282;
-
-              }
-              .header__title {
-                  font-size: 18px;
-                  font-family: "Roboto";
-                  font-weight: 500;
-              }
-              `;
-        this.shadow.appendChild(style);
-    }
-}
-customElements.define("custon-header", Headre);
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"diFdK":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Form", ()=>Form);
-class Form extends HTMLElement {
-    constructor(){
-        super();
-        this.shadow = this.attachShadow({
-            mode: "open"
-        });
-        this.render();
-    }
-    render() {
-        const form = document.createElement("form");
-        form.classList.add("form");
-        form.innerHTML = `
-<h1 class = "title"> Mis Pendiente  </h1>
-  
-<div class="form__div-input">
-<label for="text">Agregar tarea</label>
-<input class =" form__input" type="text" name="text" id="text" placeholder= " agregar tarea" />
-<button class="addButon"> Agregar elemento </button>
-</div>
-
-`;
-        const style = document.createElement("style");
-        style.innerHTML = `
-    .form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        text-align: center;
-        gap: 10px;
-      }
-      .form__div-input {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-      }
-      
-      
-        .form__input {
-          display: flex;
-          flex-direction:colum;
-          align-items: center;
-          justify-content: center;
-          width: 100%;
-          text-align: center;
-          width: 50vh;
-          height: 5vh;
-        }
-       .addButon {
-          background-color: #9CBBE9;
-          border: none;
-          color: black;
-          font-size: 16px;
-          text-align: center;
-          width: 50vh;
-          height: 5vh;
-        }
-      
-        .title {
-          font-size: 30px;
-          font-weight: 600;
-          color: #9CBBE9;
-          margin: 0;
-          padding: 0;
-        }
-    
-    
-    `;
-        this.shadow.appendChild(form);
-        this.shadow.appendChild(style);
-    }
-}
-customElements.define("custon-form", Form);
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["84Rv8","jeorp"], "jeorp", "parcelRequireb883")
+},{"../state":"1Yeju","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["84Rv8","jeorp"], "jeorp", "parcelRequireb883")
 
 //# sourceMappingURL=index.b7a05eb9.js.map

@@ -4,7 +4,7 @@ export function initHome(container) {
   const div = document.createElement("div");
 
   const style = document.createElement("style");
-  //  console.log(div, "soy el div");
+  // console.log(div, "soy el div");
 
   const tasks = state.getEnavelTasks();
 
@@ -23,25 +23,37 @@ export function initHome(container) {
   `;
 
   style.innerHTML = `
+div{
+  box-sizing: border-box;
+}
+.container {
 
-  .container {
-display: flex;
-flex-direction: column;
-justify-content: space-between;
- gap: 1.5rem;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
   }
+
+
   .conteiner-form {
     display: flex;
-
     flex-direction: column;
-    gap: 1.5rem;
+
     align-items: center;
-    gap: 1.5rem;
+  
   }
+  
   .lista {
     padding-inline-start: 0;
   }
+@media (min-width: 960px) {
+  .lista {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100vh;
+  }
+}
 
 
   `;
@@ -73,7 +85,7 @@ justify-content: space-between;
       });
       todoItem.addEventListener("delete", (e: any) => {
         state.deleteItem(e.detail.id);
-        console.log(e, "soy el evento 2");
+        // console.log(e, "soy el evento 2");
       });
       lista.appendChild(todoItem);
     }
@@ -105,6 +117,8 @@ justify-content: space-between;
     ?.querySelector("custon-form")
     ?.shadowRoot?.querySelector(".form__div-input")
     ?.querySelector(".addButon");
+
+  //console.log(tag, "soy el tag");
 
   tag?.addEventListener("click", (e) => {
     e.preventDefault();

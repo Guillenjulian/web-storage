@@ -24,9 +24,8 @@ customElements.define(
       style.innerHTML = `
       .root {
         display: flex;
-        justify-content: space-between;
-        padding: 0;
-        gap: 3rem;
+        justify-content: space-evenly;
+        gap: 2rem;
         width:311px;
         height:111px;
         font-weight: 500;
@@ -36,19 +35,40 @@ customElements.define(
         margin: 10px;
         font-size: 18px;
         }
+        @media (min-width: 960px) {
+          .root {
+        padding:0;
+        margin: 0;
+        
+          }
+
+        }
+
+
+
+
         .root_checked {
           display: flex;
-        flex-direction: column;
-          justify-content: space-between;
+          flex-direction: column;
+          justify-content: space-Evenly;
           align-items: center;
-          
         }
-     
+          
+      .titulo {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 00;
+        color: #000000;
+        text-align: center;
+        font-size: 18px;
+        
 
-       .titulo.checked {
+      }
+
+      .titulo.checked {
         text-decoration: line-through;
-       }
-       .root:hover .deleteTag {
+      } 
+      
+      .root:hover .deleteTag {
       display: block;; 
       }
        .deleteTag {
@@ -80,11 +100,11 @@ customElements.define(
       div.classList.add("root");
       div.innerHTML = `
       
+      <h4 class = "titulo ${this.checked ? "checked" : ""}">
+      ${this.title}
+      </h4>
+      
       <div class = "root_checked"> 
-       <h4 class = "titulo ${this.checked ? "checked" : ""}">
-       ${this.title}
-       </h4>
-
        <input  class= "checkbox-input"  type="checkbox"
         ${this.checked ? "checked" : ""}/>
 

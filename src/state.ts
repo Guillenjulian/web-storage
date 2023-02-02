@@ -1,5 +1,3 @@
-import { log } from "console";
-
 const state = {
   data: {
     tasks: [
@@ -31,7 +29,7 @@ const state = {
       cb(newState);
     }
     localStorage.setItem("save-state", JSON.stringify(newState));
-    //  console.log(" soy el state y e cambiado", this.data);
+    // console.log(" soy el state y e cambiado", this.data);
   },
 
   /*esta función permite que otras partes del código se suscriban a 
@@ -69,7 +67,7 @@ const state = {
 
     this.setState(currentList);
 
-    // console.log(list, "soy la lista");
+    //  console.log(list, "soy la lista");
 
     // console.log(id, value);
   },
