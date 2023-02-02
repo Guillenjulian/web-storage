@@ -872,9 +872,9 @@ class Form extends HTMLElement {
         form.innerHTML = `
 <h1 class = "title"> Mis  Pendiente  </h1>
   <div class="form__content">
-  <div class="form__div-input">
   
   <label class ="form__div-label" for="text">Agregar tarea</label>
+  <div class="form__div-input">
 
 
   <input class =" form__input" type="text" name="text" id="text" placeholder= " agregar tarea" />
@@ -918,15 +918,15 @@ class Form extends HTMLElement {
         } 
 
       .form__content {
-
+           text-align: left; 
       }
       @media (min-width: 960px) {
         .form__content {
           width: 100%;
           display: flex;
-          flex-direction: row;
-          align-items: end;
-          gap: 29px;
+          flex-direction: column;
+          align-items: flex-start;
+        
         }
       }
       .form__div-input {
@@ -937,25 +937,20 @@ class Form extends HTMLElement {
       @media (min-width: 960px) {
         .form__div-input {
           width: 100%;
-          align-items:text-end;
+        flex-direction: row;
+        align-items: center;
+
         }}
   
         .form__input {
-          display: flex;
-          flex-direction:colum;
-          align-items: center;
-          justify-content: center;
-          width: 100%;
-          text-align: center;
-          width: 312px;
-          height: 55px;
-          gap: 10px;
+        height: 55px;
           border-radius: 4px;
+          font-size: 2.1rem;
 
         }
         @media (min-width: 960px) {
           .form__input {
-            width: 100%;
+         
 
           }
         }
@@ -967,9 +962,17 @@ class Form extends HTMLElement {
           color: black;
           font-size: 16px;
           text-align: center;
-          width: 312px;
           height: 55px;
-          margin-top: 15px;
+          margin-top: 10px;
+          
+        }
+        
+        @media (min-width: 960px) {
+          .addButon {
+            margin-left: 10px;
+      
+margin-top: 0px;
+          }
         }
         
       
@@ -1006,6 +1009,11 @@ function initHome(container) {
   </div>  
   `;
     style.innerHTML = `
+
+  <link rel="stylesheet" href="../style.css" /> 
+
+  
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 div{
   box-sizing: border-box;
 }
